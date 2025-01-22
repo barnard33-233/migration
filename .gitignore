@@ -1,5 +1,5 @@
 *
 !.gitignore
+!.gitmodules
 !flake.nix
 !flake.lock
-!./toolchains
