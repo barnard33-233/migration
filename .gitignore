@@ -3,3 +3,9 @@
 !.gitmodules
 !flake.nix
 !flake.lock
+!overlay
+!overlay/*
+!overlay/**
+!scripts
+!scripts/*
+!.gdbinit
