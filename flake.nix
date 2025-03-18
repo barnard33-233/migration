@@ -40,15 +40,12 @@
         shellHook = ''
           export TOOLCHAINS_PATH=/home/mohan/dev/migration/toolchains/aarch64/bin/
           export PATH=$TOOLCHAINS_PATH:$PATH
-          export CC=$TOOLCHAINS_PATH/aarch64-linux-gnu-gcc
-          export CPP=$TOOLCHAINS_PATH/aarch64-linux-gnu-gcc
-          export LD=$TOOLCHAINS_PATH/aarch64-linux-gnu-gcc
-          export AS=$TOOLCHAINS_PATH/aarch64-linux-gnu-gcc
-          export AR=$TOOLCHAINS_PATH/aarch64-linux-gnu-ar
-          export OC=$TOOLCHAINS_PATH/aarch64-linux-gnu-objcopy
-          export OD=$TOOLCHAINS_PATH/aarch64-linux-gnu-objdump
-          export HOSTCC=/usr/bin/gcc
+          export CROSS_COMPILE=aarch64-linux-gnu-
         '';
+      };
+
+      l2qemu = pkgs.mkShell {
+
       };
     };
   };
