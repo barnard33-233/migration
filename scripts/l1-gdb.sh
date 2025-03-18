@@ -8,20 +8,27 @@ FLASH_BIN_PATH=$BINARIES_PATH/flash.bin
 IMAGE_PATH=$BINARIES_PATH/Image
 IMAGE_GUEST_PATH=$BINARIES_PATH/Image-guest
 ROOTFS_PATH=$BUILDROOT_BINARIES_PATH/rootfs.ext4
+ROOTFS_L2_PATH=$BUILDROOT_BINARIES_PATH/rootfs.cpio
 
 PORT0=56420
 PORT1=56421
 PORT2=56422
 PORT3=56423
 
+PORT_SSH=5924
+PORT_MONITOR=5925
+
 echo "Copying files."
 rm -f $IMAGE_PATH
 rm -f $FLASH_BIN_PATH
 rm -f $ROOTFS_PATH
+rm -f $ROOTFS_L2_PATH
 cp $ROOT/linux/arch/arm64/boot/Image $IMAGE_PATH
 cp $ROOT/linux-guest/arch/arm64/boot/Image $IMAGE_GUEST_PATH
 cp $ROOT/trusted-firmware-a/flash.bin $FLASH_BIN_PATH
-cp $ROOT/buildroot/output/images/* $BUILDROOT_BINARIES_PATH/
+cp $ROOT/buildroot/output/images/rootfs.ext4 $ROOTFS_PATH
+cp $ROOT/buildroot-l2/output/images/rootfs.cpio $ROOTFS_L2_PATH
+
 
 handle_sigint() {
     exit 0
@@ -44,7 +51,7 @@ tmux send -t cca-mohan:window0.2 "socat -,rawer TCP-LISTEN:$PORT2" ENTER # Secur
 tmux send -t cca-mohan:window0.3 "socat -,rawer TCP-LISTEN:$PORT3" ENTER # Realm
 tmux select-window -t cca-mohan:window0.1
 
-ssh-keygen -f '/home/mohan/.ssh/known_hosts' -R '[127.0.0.1]:5922'
+ssh-keygen -f '/home/mohan/.ssh/known_hosts' -R "[127.0.0.1]:$PORT_SSH"
 sleep 1 # XXX totally rubbish
 
 # start host qemu
@@ -69,7 +76,7 @@ cd $BINARIES_PATH && $QEMU_BUILD/qemu-system-aarch64 -gdb tcp::1236 -S\
     -device virtconsole,chardev=hvc1 \
     -append "nokaslr root=/dev/vda earlycon console=hvc0" \
     -device virtio-net-pci,netdev=net0 \
-    -netdev user,id=net0,hostfwd=tcp::5922-:22,hostfwd=tcp::5923-:1234\
+    -netdev user,id=net0,hostfwd=tcp::$PORT_SSH-:22,hostfwd=tcp::$PORT_MONITOR-:1234\
     -device virtio-9p-device,fsdev=shr0,mount_tag=shr0 \
     -fsdev local,security_model=none,path=../../,id=shr0 
 
