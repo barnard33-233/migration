@@ -67,13 +67,15 @@ cd $BINARIES_PATH && $QEMU_BUILD/qemu-system-aarch64 -gdb tcp::1236 -S\
     -append root=/dev/vda \
     -nodefaults \
     -serial tcp:localhost:$PORT0 \
-    -serial tcp:localhost:$PORT2 \
     -chardev socket,mux=on,id=hvc0,port=$PORT1,host=localhost \
     -device virtio-serial-device \
     -device virtconsole,chardev=hvc0 \
     -chardev socket,mux=on,id=hvc1,port=$PORT3,host=localhost \
     -device virtio-serial-device \
     -device virtconsole,chardev=hvc1 \
+    -chardev socket,mux=on,id=hvc2,port=$PORT2,host=localhost \
+    -device virtio-serial-device \
+    -device virtconsole,chardev=hvc2 \
     -append "nokaslr root=/dev/vda earlycon console=hvc0" \
     -device virtio-net-pci,netdev=net0 \
     -netdev user,id=net0,hostfwd=tcp::$PORT_SSH-:22,hostfwd=tcp::$PORT_MONITOR-:1234\
