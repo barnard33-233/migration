@@ -35,6 +35,7 @@
           pkgs.openssl
           pkgs.binutils
           pkgs.libuuid
+          pkgs.bear
           binutils
         ];
         shellHook = ''

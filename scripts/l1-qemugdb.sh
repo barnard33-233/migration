@@ -18,9 +18,6 @@ PORT3=56423
 PORT_SSH=5924
 PORT_MONITOR=5925
 
-NCPU=1
-MEMSIZE=8G
-
 echo "Copying files."
 rm -f $IMAGE_PATH
 rm -f $FLASH_BIN_PATH
@@ -59,9 +56,9 @@ sleep 1 # XXX totally rubbish
 
 # start host qemu
 echo "Starting host qemu"
-cd $BINARIES_PATH && $QEMU_BUILD/qemu-system-aarch64 -gdb tcp::1236 -S\
+cd $BINARIES_PATH && gdb --args $QEMU_BUILD/qemu-system-aarch64 \
     -M virt,virtualization=on,secure=on,gic-version=3 \
-    -M acpi=off -cpu max,x-rme=on,sme=off -m $MEMSIZE -smp $NCPU \
+    -M acpi=off -cpu max,x-rme=on,sme=off -m 4G -smp 1 \
     -nographic \
     -bios $FLASH_BIN_PATH \
     -kernel $IMAGE_PATH \

@@ -18,6 +18,9 @@ PORT3=56423
 PORT_SSH=5924
 PORT_MONITOR=5925
 
+NCPU=2
+MEMSIZE=4G
+
 echo "Copying files."
 rm -f $IMAGE_PATH
 rm -f $FLASH_BIN_PATH
@@ -46,8 +49,8 @@ tmux split-window -v -t cca-mohan:window0.0
 tmux split-window -v -t cca-mohan:window0.2
 
 tmux send -t cca-mohan:window0.0 "socat -,rawer TCP-LISTEN:$PORT0" ENTER # Firmware
-tmux send -t cca-mohan:window0.1 "socat -,rawer TCP-LISTEN:$PORT1" ENTER # host
-tmux send -t cca-mohan:window0.2 "socat -,rawer TCP-LISTEN:$PORT2" ENTER # Secure
+tmux send -t cca-mohan:window0.1 "socat -,rawer TCP-LISTEN:$PORT1" ENTER # Host
+tmux send -t cca-mohan:window0.2 "socat -,rawer TCP-LISTEN:$PORT2" ENTER # Monitor
 tmux send -t cca-mohan:window0.3 "socat -,rawer TCP-LISTEN:$PORT3" ENTER # Realm
 tmux select-window -t cca-mohan:window0.1
 
@@ -58,7 +61,7 @@ sleep 1 # XXX totally rubbish
 echo "Starting host qemu"
 cd $BINARIES_PATH && $QEMU_BUILD/qemu-system-aarch64 \
     -M virt,virtualization=on,secure=on,gic-version=3 \
-    -M acpi=off -cpu max,x-rme=on,sme=off -m 4G -smp 1 \
+    -M acpi=off -cpu max,x-rme=on,sme=off -m $MEMSIZE -smp $NCPU \
     -nographic \
     -bios $FLASH_BIN_PATH \
     -kernel $IMAGE_PATH \
@@ -76,7 +79,7 @@ cd $BINARIES_PATH && $QEMU_BUILD/qemu-system-aarch64 \
     -chardev socket,mux=on,id=hvc2,port=$PORT2,host=localhost \
     -device virtio-serial-device \
     -device virtconsole,chardev=hvc2 \
-    -append "nokaslr root=/dev/vda earlycon console=hvc0" \
+    -append "rcu_cpu_stall_timeout=0 nokaslr root=/dev/vda earlycon console=hvc0" \
     -device virtio-net-pci,netdev=net0 \
     -netdev user,id=net0,hostfwd=tcp::$PORT_SSH-:22,hostfwd=tcp::$PORT_MONITOR-:1234\
     -device virtio-9p-device,fsdev=shr0,mount_tag=shr0 \
