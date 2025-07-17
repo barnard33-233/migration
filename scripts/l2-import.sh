@@ -5,7 +5,7 @@ IMAGE_PATH=$BINARY_PATH/Image-guest
 ROOTFS_PATH=$BINARY_PATH/br/rootfs.cpio
 INCOMING_PATH=/mnt/mig.img
 
-L2NCPU=2
+L2NCPU=1
 
 qemu-system-aarch64 \
      -serial /dev/hvc1 \
