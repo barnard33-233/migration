@@ -1,0 +1,42 @@
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="shell" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="tmux" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="rmm" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/rmm && exec fish"
+    }
+  }
+  tab name="kvm" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/linux && exec fish"
+    }
+  }
+  tab name="qemu.target" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/qemu.target && exec fish"
+    }
+  }
+}

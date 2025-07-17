@@ -9,3 +9,4 @@
 !scripts
 !scripts/*
 !.gdbinit
+!zellij.kdl
