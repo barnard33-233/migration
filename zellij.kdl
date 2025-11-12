@@ -4,7 +4,7 @@ layout {
       plugin location="zellij:tab-bar"
     }
     children
-    pane size=2 borderless=true {
+    pane size=1 borderless=true {
       plugin location="zellij:status-bar"
     }
   }
@@ -16,6 +16,12 @@ layout {
     }
   }
   tab name="tmux" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="gdb" {
     pane {
       command "fish"
       args "-c" "cd /home/mohan/dev/migration && exec fish"
@@ -37,6 +43,12 @@ layout {
     pane {
       command "fish"
       args "-c" "cd /home/mohan/dev/migration/qemu.target && exec fish"
+    }
+  }
+  tab name="shell2" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
     }
   }
 }
