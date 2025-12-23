@@ -1,0 +1,84 @@
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
+    children
+    pane size=1 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="sh-src" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="tmux-src" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="sh-dst" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="tmux-dst" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+  tab name="rmm" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/rmm && exec fish"
+    }
+  }
+  tab name="kvm" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/linux && exec fish"
+    }
+  }
+  tab name="qemu.target" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/qemu.target && exec fish"
+    }
+  }
+  tab name="scripts" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/scripts && exec fish"
+    }
+  }
+  tab name="build-rmm" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/rmm && exec fish"
+    }
+  }
+  tab name="build-kernel" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/linux && exec fish"
+    }
+  }
+  tab name="build-brl1" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration/buildroot && exec fish"
+    }
+  }
+  tab name="shell" {
+    pane {
+      command "fish"
+      args "-c" "cd /home/mohan/dev/migration && exec fish"
+    }
+  }
+}

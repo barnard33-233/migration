@@ -10,3 +10,5 @@
 !scripts/*
 !.gdbinit
 !zellij.kdl
+!zellij-tcp.kdl
+!*.gdb
