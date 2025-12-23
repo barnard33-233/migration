@@ -21,6 +21,7 @@
           pkg-config
           pkgs.openssl
           pkgs.binutils
+          pkgs.ncurses
           binutils
         ];
         shellHook=''

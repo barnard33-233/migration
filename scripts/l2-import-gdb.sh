@@ -14,7 +14,7 @@ gdbserver :1234 qemu-system-aarch64 \
      -overcommit 'mem-lock=on' -M 'confidential-guest-support=rme0' \
      -object 'rme-guest,id=rme0,measurement-algo=sha512,migration-cap=dev' \
      -kernel $IMAGE_PATH -initrd $ROOTFS_PATH \
-     -append 'rcu_cpu_stall_timeout=0 nokaslr earycon console=ttyAMA0 rdinit=/sbin/init cpuidle.off=1' \
+     -append 'rcu_cpu_stall_timeout=0 nokaslr earlycon console=ttyAMA0 rdinit=/sbin/init cpuidle.off=1' \
      -net none \
      -nographic \
      --incoming "exec: cat $INCOMING_PATH" \
